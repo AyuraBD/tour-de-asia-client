@@ -7,8 +7,16 @@ import Login from "../Pages/Login/Login";
 import Profile from "../Pages/Profile/Profile";
 import Destinations from "../Pages/Destinations/Destinations";
 import AddDestinations from "../Pages/Destinations/AddDestinations/AddDestinations";
+import NotFound from "../Pages/NotFound/NotFound";
 import PrivateRouter from "./PrivateRouter/PrivateRouter";
-
+import Aboutus from "../Pages/Aboutus/Aboutus";
+import TravelGuide from "../Pages/TravelGuide/TravelGuide";
+import Blogs from "../Pages/Blogs/Blogs";
+import DestinationDetails from "../Pages/Destinations/DestinationDetails";
+import MyList from "../Pages/MyList/MyList";
+import UpdateMylist from "../Pages/MyList/UpdateMylist";
+import AddCountry from "../Pages/AddCountry/AddCountry";
+import CountryCard from "../Pages/CountryCard/CountryCard";
 export const Router = createBrowserRouter([
   {
     path: "/",
@@ -31,8 +39,8 @@ export const Router = createBrowserRouter([
         element: <Login></Login>
       },
       {
-        path: "/profile",
-        element: <PrivateRouter><Profile></Profile></PrivateRouter>
+        path: `/profile`,
+        element: <PrivateRouter><Profile></Profile></PrivateRouter>,
       },
       {
         path: "/destinations",
@@ -45,7 +53,44 @@ export const Router = createBrowserRouter([
       {
         path: "/adddestinations",
         element: <AddDestinations></AddDestinations>
+      },
+      {
+        path: "/travelguide",
+        element: <TravelGuide></TravelGuide>
+      },
+      {
+        path: "/blogs",
+        element: <Blogs></Blogs>
+      },
+      {
+        path: "*",
+        element: <NotFound></NotFound>
+      },
+      {
+        path:'/aboutus',
+        element: <Aboutus></Aboutus>
+      },
+      {
+        path:`/destination/:id`,
+        element:<PrivateRouter><DestinationDetails></DestinationDetails></PrivateRouter>
+      },
+      {
+        path: 'mylist',
+        element: <PrivateRouter><MyList></MyList></PrivateRouter>
+      },
+      {
+        path:`/mylist/update/:id`,
+        element: <PrivateRouter><UpdateMylist></UpdateMylist></PrivateRouter>
+      },
+      {
+        path:'/addcountry',
+        element: <PrivateRouter><AddCountry></AddCountry></PrivateRouter>
+      },
+      {
+        path: '/country/:country_name',
+        element: <CountryCard></CountryCard>
       }
-    ]
+    ],
+    
   }
 ]);

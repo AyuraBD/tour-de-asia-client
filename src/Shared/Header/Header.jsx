@@ -3,11 +3,18 @@ import { AuthContext } from "../../AuthProviders/AuthProviders"
 import { useContext } from "react"
 
 const Header = () => {
-  const {user, userLogout} = useContext(AuthContext);
+  const {user, userLogout, loading} = useContext(AuthContext);
+  
   const dropdownUl = 
     <>
-      <li><a>About us</a></li>
+      <li><Link to='/aboutus'>About us</Link></li>
       <li><Link to="/destinations">Destinations</Link></li>
+      <li><Link to='/adddestinations'>Add destinations</Link></li>
+      {user && <>
+        <li><Link to='/addcountry'>Add Country</Link></li>
+        <li><Link to='/mylist'>My List</Link></li>
+      </>
+      }
       {/* <li>
         <details>
           <summary>Destinations</summary>
@@ -21,17 +28,18 @@ const Header = () => {
           </ul>
         </details>
       </li> */}
-      <li><a>Travel Guides</a></li>
-      <li><a>Blogs</a></li>
-      <li><Link to='/adddestinations'>Add destinations</Link></li>
+      <li><Link to='/travelguide'>Travel Guides</Link></li>
+      <li><Link to='blogs'>Blogs</Link></li>
     </>
   const handleLogout = () => {
     userLogout()
       .then(() => {
-        console.log('User logged out');
+        if(loading){
+          return <progress className="progress w-56"></progress>
+        }
       })
-      .catch((error) => {
-        console.error('Error logging out:', error);
+      .catch(() => {
+
       });
   }
   return (
@@ -56,9 +64,9 @@ const Header = () => {
       </div>
       {
         user ? 
-        <div className="navbar-end">
-          <Link to='/profile' className="btn btn-ghost">{user.displayName}</Link>
-          <button onClick={handleLogout} className="btn">Logout</button>
+        <div className="navbar-end gap-3">
+          <Link to={`/profile`} className="btn btn-success">{user.displayName}</Link>
+          <button onClick={handleLogout} className="btn btn-primary">Logout</button>
         </div>
         :
         <div className="navbar-end">

@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { AuthContext } from '../../../AuthProviders/AuthProviders'
 
 const AddDestinations = () => {
+  const {user} = useContext(AuthContext);
   const [error, setError] = useState("");
   const handleAddDestination = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const form = e.target
     const image = form.image.value
     const tourist_spot = form.tourist_spot.value
@@ -25,7 +27,9 @@ const AddDestinations = () => {
       cost,
       seasonality,
       time,
-      visitors
+      visitors,
+      email: user?.email,
+      name: user?.displayName
     }
     setError("");
     Swal.fire({
@@ -69,15 +73,15 @@ const AddDestinations = () => {
     })
   }
   return (
-    <div className='px-10'>
-      <div className='text-center mb-10'>
+    <div className='px-10 lg:py-10 md:py-6 sm:py-6 max-sm:py-4'>
+      <div className='lg:w-3/4 m-auto text-center mb-10'>
         <h2 className='text-3xl mb-2'>Add your destinations</h2>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis quis autem repellat magnam nam qui architecto mollitia commodi, impedit corporis, eligendi esse odio, rerum deleniti deserunt nihil quo velit. Explicabo itaque.</p>
+        <p>Add more destination to travellers to explore more. This isn't dummy text.</p>
       </div>
       <div>
         <form onSubmit={handleAddDestination}>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-            <div className='mb-5'>
+            <div>
               <label htmlFor="image" className='block mb-2'>Image URL</label>
               <input type="text" id='image' name="image" className='border border-gray-300 rounded-md p-2 w-full' placeholder="Image URL" required />
             </div>
@@ -87,7 +91,7 @@ const AddDestinations = () => {
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-            <div className='mb-5'>
+            <div>
               <label htmlFor="country_name" className='block mb-2'>Country name</label>
               <input type="text" id='country_name' name='country_name' className='border border-gray-300 rounded-md p-2 w-full' placeholder="Country name" required />
             </div>
@@ -97,7 +101,7 @@ const AddDestinations = () => {
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-            <div className='mb-5'>
+            <div>
               <label htmlFor="description" className='block mb-2'>Short description</label>
               <input type="text" id='description' name='description' className='border border-gray-300 rounded-md p-2 w-full' placeholder="Short description" required />
             </div>
@@ -107,7 +111,7 @@ const AddDestinations = () => {
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-            <div className='mb-5'>
+            <div>
               <label htmlFor="seasonality" className='block mb-2'>Seasonality</label>
               <input type="text" id='seasonality' name='seasonality' className='border border-gray-300 rounded-md p-2 w-full' placeholder="Seasonality  'Summer', 'Winter'" required />
             </div>
@@ -122,8 +126,8 @@ const AddDestinations = () => {
               <input type="number" id='visitors' name='visitors' className='border border-gray-300 rounded-md p-2 w-full' placeholder="Total visitors per year" required />
             </div>
           </div>
-          <div className='mb-5'>
-            <input type="submit" id='submit' value='Add to your destinations' className='cursor-pointer border border-gray-300 rounded-md p-2 w-full' />
+          <div className='mb-5 text-center'>
+            <input type="submit" id='submit' value='Add to your destinations' className='cursor-pointer border border-gray-300 rounded-md p-2 w-1/2 btn btn-primary' />
           </div>
           {/* Alert */}
           <div>
