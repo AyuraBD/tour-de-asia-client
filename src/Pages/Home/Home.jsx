@@ -7,7 +7,16 @@ const Home = () => {
   const [destinations, setDestinations] = useState([]);
   const [loadedDestinations, setLoadedDestinations] = useState([]);
   const [countries, setCountries] = useState([]);
-
+  const [isDark, setIsDark] = useState(false);
+  
+  const handleChange = (e)=>{
+    setIsDark(e.target.checked);
+    if(e.target.checked){
+      document.getElementById('check').setAttribute('data-theme', 'dark');
+    }else{
+      document.querySelector('check').setAttribute('data-theme', 'light');
+    }
+  }
   useEffect(() => {
     fetch('http://localhost:3000/destinations')
     .then(res => res.json())
@@ -25,14 +34,18 @@ const Home = () => {
     })
   })
   return (
-    <>
+  <div className='home' data-theme={isDark ? 'dark' : 'light'}>
     <Banner></Banner>
 
     {/* Tourist spots */}
     <div className='px-10 py-10'>
+      <div className='flex justify-start items-center mb-5 gap-3'>
+        <input type="checkbox" id="check" className='toggle' onClick={() => setIsDark(!isDark)} checked={isDark}   />
+        <label htmlFor="check" className='text-gray-500'>{isDark ? 'Dark': 'Light'} mode</label>
+      </div>
       <div className='mb-10 text-center'>
         <h1 className='text-3xl font-bold mb-2'>All Tourist Spots</h1>
-        <p className=' text-gray-500'>Explore the most beautiful places in Asia</p>
+        <p className=''>Explore the most beautiful places in Asia</p>
       </div>
 
       {/* Tourist spots */}
@@ -115,7 +128,7 @@ const Home = () => {
       </div>
     </div>
 
-    </>
+  </div>
   )
 }
 

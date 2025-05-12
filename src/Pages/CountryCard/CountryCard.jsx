@@ -20,7 +20,6 @@ const CountryCard = () => {
     })
   }, [country_name])
 
-  
   return (
     <div className='container mx-auto lg:px-20 md:px-10 px-4 py-10'>
       <div className='mb-10 text-center'>
@@ -40,7 +39,7 @@ const CountryCard = () => {
                 <h2 className='card-title'>Seasonality: {country.seasonality}</h2>
                 <p>Description: {country.description}</p>
               </div>
-              <Link to='/' className='btn btn-primary'>View details</Link>
+              <Link to={`/country/touristspot/${country._id}`} className='btn btn-primary'>View details</Link>
             </div>
           </div>)
         }

@@ -17,6 +17,7 @@ import MyList from "../Pages/MyList/MyList";
 import UpdateMylist from "../Pages/MyList/UpdateMylist";
 import AddCountry from "../Pages/AddCountry/AddCountry";
 import CountryCard from "../Pages/CountryCard/CountryCard";
+import CountryCardDetails from "../Pages/CountryCard/CountryCardDetails";
 export const Router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +90,10 @@ export const Router = createBrowserRouter([
       {
         path: '/country/:country_name',
         element: <CountryCard></CountryCard>
+      },
+      {
+        path: '/country/touristspot/:id',
+        element: <PrivateRouter><CountryCardDetails></CountryCardDetails></PrivateRouter>
       }
     ],
     

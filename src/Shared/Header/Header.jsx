@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../AuthProviders/AuthProviders"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
+import { Tooltip } from "react-tooltip";
 
 const Header = () => {
   const {user, userLogout, loading} = useContext(AuthContext);
+  const [loadedUser, setLoadedUser] = useState(null);
+  useEffect(() => {
+    fetch(`http://localhost:3000/profile/${user?.email}`)
+      .then(res => res.json())
+      .then(data => {
+        setLoadedUser(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  })
   
   const dropdownUl = 
     <>
@@ -65,7 +77,10 @@ const Header = () => {
       {
         user ? 
         <div className="navbar-end gap-3">
-          <Link to={`/profile`} className="btn btn-success">{user.displayName}</Link>
+          <Link to={`/profile`} data-tooltip-id="my-tooltip" data-tooltip-place="left" data-tooltip-content={loadedUser.name} className="">
+            <img className="rounded-full w-12 h-12" src={loadedUser.photoURL} alt={loadedUser.name} />
+            <Tooltip id="my-tooltip"></Tooltip>
+          </Link>
           <button onClick={handleLogout} className="btn btn-primary">Logout</button>
         </div>
         :

@@ -2,3 +2,7 @@
   background-color: black;
   opacity: 0.6;
 }
+.home{
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
