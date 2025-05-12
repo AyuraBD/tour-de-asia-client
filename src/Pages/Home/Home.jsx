@@ -9,14 +9,7 @@ const Home = () => {
   const [countries, setCountries] = useState([]);
   const [isDark, setIsDark] = useState(false);
   
-  const handleChange = (e)=>{
-    setIsDark(e.target.checked);
-    if(e.target.checked){
-      document.getElementById('check').setAttribute('data-theme', 'dark');
-    }else{
-      document.querySelector('check').setAttribute('data-theme', 'light');
-    }
-  }
+  
   useEffect(() => {
     fetch('http://localhost:3000/destinations')
     .then(res => res.json())
