@@ -4,19 +4,15 @@ import { Link, useParams } from 'react-router-dom'
 const CountryCard = () => {
   const {country_name} = useParams();
   const [countryCard, setCountryCard] = useState(null);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
   
   useEffect(() =>{
-    fetch(`http://localhost:3000/country/${country_name}`)
+    fetch(`http://localhost:3000/country/country_name?country_name=${country_name}`)
     .then(res => res.json())
     .then(data => {
       setCountryCard(data);
-      setLoading(false);
     })
-    .catch (err => {
-      setError(err.message);
-      setLoading(false);
+    .catch (() =>{
+
     })
   }, [country_name])
 
@@ -39,7 +35,7 @@ const CountryCard = () => {
                 <h2 className='card-title'>Seasonality: {country.seasonality}</h2>
                 <p>Description: {country.description}</p>
               </div>
-              <Link to={`/country/touristspot/${country._id}`} className='btn btn-primary'>View details</Link>
+              <Link to={`/touristspot/details/${country._id}`} className='btn btn-primary'>View details</Link>
             </div>
           </div>)
         }

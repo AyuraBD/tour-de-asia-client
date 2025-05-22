@@ -7,22 +7,27 @@ const Header = () => {
   const {user, userLogout, loading} = useContext(AuthContext);
   const [loadedUser, setLoadedUser] = useState(null);
   useEffect(() => {
-    fetch(`http://localhost:3000/profile/${user?.email}`)
+    fetch(`http://localhost:3000/profile?email=${user?.email}`,{
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
       .then(res => res.json())
       .then(data => {
         setLoadedUser(data);
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.message);
       })
-  })
+  }, [user?.email])
   
   const dropdownUl = 
     <>
       <li><Link to='/aboutus'>About us</Link></li>
       <li><Link to="/destinations">Destinations</Link></li>
       <li><Link to='/adddestinations'>Add destinations</Link></li>
-      {user && <>
+      {user?.email && <>
         <li><Link to='/addcountry'>Add Country</Link></li>
         <li><Link to='/mylist'>My List</Link></li>
       </>
@@ -77,8 +82,8 @@ const Header = () => {
       {
         user ? 
         <div className="navbar-end gap-3">
-          <Link to={`/profile`} data-tooltip-id="my-tooltip" data-tooltip-place="left" data-tooltip-content={loadedUser.name} className="">
-            <img className="rounded-full w-12 h-12" src={loadedUser.photoURL} alt={loadedUser.name} />
+          <Link to={`/profile`} data-tooltip-id="my-tooltip" data-tooltip-place="left" data-tooltip-content={loadedUser?.name} className="">
+            <img className="rounded-full w-12 h-12" src={loadedUser?.photoURL} alt={loadedUser?.name} />
             <Tooltip id="my-tooltip"></Tooltip>
           </Link>
           <button onClick={handleLogout} className="btn btn-primary">Logout</button>

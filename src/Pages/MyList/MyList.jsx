@@ -9,27 +9,19 @@ const MyList = () => {
   const [error, setError] = useState(''); 
   console.log(loadedMyLists);
   useEffect(() => {
-    if(!user.email){
-      return
-    }
-    const fetchMyList = async () =>{
-      try {
-        const response = await fetch(`http://localhost:3000/mylist/${user.email}`);
-        if(!response.ok){
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+    fetch(`http://localhost:3000/mylist?email=${user.email}`)
+      .then(res => res.json())
+      .then(data => {
         setLoadedMyLists(data);
-      } catch (error){
-        setError(error.message);
-      }
-    }
-    fetchMyList();  
+      })
+      .catch(err => {
+        setError(err.message);
+      })
   }, [user]);
   if(!user.email){
     return (
       <div className='container mx-auto lg:px-20 md:px-10 px-4 py-10'>
-        <h3 className='text-3xl font-semibold mb-2'>Please login to see your list</h3>
+        <h3 className='text-3xl font-semibold mb-2'>Please <Link className='text-blue-600' to='/login'>Login</Link> to see your list </h3>
       </div>
     )
   }

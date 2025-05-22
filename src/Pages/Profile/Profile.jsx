@@ -5,26 +5,18 @@ const Profile = () => {
   const {user} = useContext(AuthContext);
   const [loadedUser, setLoadUser] = useState(null);
   const [error, setError] = useState('');
+
   useEffect( () =>{
-    if(!user.email){
-      return;
-    }
-    const fetchUser = async () =>{
-      try {
-        const response = await fetch(`http://localhost:3000/profile/${user.email}`);
-        if(!response.ok){
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setLoadUser(data);
-      } catch (error) {
-        setError(error.message);
-      } 
-    }
-    fetchUser();
-    
+    fetch(`http://localhost:3000/profile?email=${user?.email}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => setLoadUser(data))
+    .catch(err => setError(err.message))
   }, [user?.email]);
-  console.log(loadedUser);
 
   if(error){
     return <p className='text-red-500'>{error}</p>

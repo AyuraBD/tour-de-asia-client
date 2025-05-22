@@ -12,7 +12,6 @@ import PrivateRouter from "./PrivateRouter/PrivateRouter";
 import Aboutus from "../Pages/Aboutus/Aboutus";
 import TravelGuide from "../Pages/TravelGuide/TravelGuide";
 import Blogs from "../Pages/Blogs/Blogs";
-import DestinationDetails from "../Pages/Destinations/DestinationDetails";
 import MyList from "../Pages/MyList/MyList";
 import UpdateMylist from "../Pages/MyList/UpdateMylist";
 import AddCountry from "../Pages/AddCountry/AddCountry";
@@ -52,10 +51,6 @@ export const Router = createBrowserRouter([
         element: <PrivateRouter><AddDestinations></AddDestinations></PrivateRouter>
       },
       {
-        path: "/adddestinations",
-        element: <AddDestinations></AddDestinations>
-      },
-      {
         path: "/travelguide",
         element: <TravelGuide></TravelGuide>
       },
@@ -73,7 +68,8 @@ export const Router = createBrowserRouter([
       },
       {
         path:`/destination/:id`,
-        element:<PrivateRouter><DestinationDetails></DestinationDetails></PrivateRouter>
+        element:<PrivateRouter><CountryCardDetails></CountryCardDetails></PrivateRouter>,
+        loader: ({params}) => fetch(`http://localhost:3000/destination/${params.id}`)
       },
       {
         path: 'mylist',
@@ -81,7 +77,9 @@ export const Router = createBrowserRouter([
       },
       {
         path:`/mylist/update/:id`,
-        element: <PrivateRouter><UpdateMylist></UpdateMylist></PrivateRouter>
+        element: <PrivateRouter><UpdateMylist></UpdateMylist></PrivateRouter>,
+        loader: ({params}) => fetch(`http://localhost:3000/mylist/update/${params.id}`)
+
       },
       {
         path:'/addcountry',
@@ -92,8 +90,9 @@ export const Router = createBrowserRouter([
         element: <CountryCard></CountryCard>
       },
       {
-        path: '/country/touristspot/:id',
-        element: <PrivateRouter><CountryCardDetails></CountryCardDetails></PrivateRouter>
+        path: '/touristspot/details/:id',
+        element: <PrivateRouter><CountryCardDetails></CountryCardDetails></PrivateRouter>,
+        loader: ({params})=> fetch(`http://localhost:3000/destination/${params.id}`)
       }
     ],
     

@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const UpdateMylist = () => {
-  const {id} = useParams();
-  const [updateMyListData, setUpdateMyListData] = useState({});
-  const {image, tourist_spot, country_name, location, description, cost, seasonality, time, visitors} = updateMyListData;
-  useEffect(() =>{
-      fetch(`http://localhost:3000/mylist/update/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        setUpdateMyListData(data);
-      })
-  }, [id])
+  const {id, image, tourist_spot, country_name, location, description, cost, seasonality, time, visitors} = useLoaderData();
   const [error, setError] = useState("");
-  if (!updateMyListData) {
-    return <div className="flex justify-center items-center h-screen">
-            <progress className="progress w-56"></progress>
-          </div>
-  }
   // const {image, tourist_spot, country_name, location, description, cost, seasonality, time, visitors} = myListSingleData;
   const handleEditMyList = (e) =>{
     e.preventDefault();

@@ -9,7 +9,6 @@ const Home = () => {
   const [countries, setCountries] = useState([]);
   const [isDark, setIsDark] = useState(false);
   
-  
   useEffect(() => {
     fetch('http://localhost:3000/destinations')
     .then(res => res.json())
